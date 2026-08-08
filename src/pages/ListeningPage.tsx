@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { safeStorage } from '../lib/storage';
 import { useApp } from '../context/AppContext';
 import { aiClientService } from '../services/aiClientService';
 import {
@@ -273,10 +274,10 @@ const DEFAULT_COACH_EXERCISES: ListeningActivity[] = [
 export const ListeningPage: React.FC = () => {
   const { updateSkillScore, addXpAndMinutes, saveVocabularyItem } = useApp();
 
-  // Load listening history / profile from localStorage
+  // Load listening history / profile from safeStorage
   const [coachProfile, setCoachProfile] = useState<ListeningCoachProfile>(() => {
     try {
-      const saved = localStorage.getItem('listening_coach_profile_v2');
+      const saved = safeStorage.getItem('listening_coach_profile_v2');
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error(e);
@@ -304,9 +305,9 @@ export const ListeningPage: React.FC = () => {
   const allExercises = [...DEFAULT_COACH_EXERCISES, ...customExercises];
   const activeExercise = allExercises.find(e => e.id === selectedExId) || allExercises[0];
 
-  // Sync coach profile to localStorage whenever it changes
+  // Sync coach profile to safeStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('listening_coach_profile_v2', JSON.stringify(coachProfile));
+    safeStorage.setItem('listening_coach_profile_v2', JSON.stringify(coachProfile));
   }, [coachProfile]);
 
   // Audio simulator timer
@@ -481,9 +482,9 @@ export const ListeningPage: React.FC = () => {
     });
   };
 
-  // Connect topic to Speaking Tab (carry over via localStorage and trigger navigation)
+  // Connect topic to Speaking Tab (carry over via safeStorage and trigger navigation)
   const handleLaunchSpeakingBridge = () => {
-    localStorage.setItem(
+    safeStorage.setItem(
       'listening_speaking_bridge',
       JSON.stringify({
         scenario: activeExercise.speakingBridge.scenario,
