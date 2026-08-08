@@ -6,12 +6,14 @@ import { LessonModal } from "./LessonModal";
 
 export const AppShell: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
       <div className="flex">
         <DesktopSidebar />
-        <main className="flex-1 min-w-0 pb-24 lg:pb-8">
-          <Outlet />
+        <main className="flex-1 min-w-0 pb-28 lg:pb-16">
+          <div className="mx-auto w-full max-w-4xl px-5 py-8 sm:px-8">
+            <Outlet />
+          </div>
         </main>
       </div>
       <MobileNavigation />
