@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GrammarRouteImport } from './routes/grammar'
 import { Route as SpeakingRouteImport } from './routes/speaking'
+import { Route as VocabularyRouteImport } from './routes/vocabulary'
 import { Route as ApiAiActionRouteImport } from './routes/api/ai/$action'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const SpeakingRoute = SpeakingRouteImport.update({
   path: '/speaking',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VocabularyRoute = VocabularyRouteImport.update({
+  id: '/vocabulary',
+  path: '/vocabulary',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiActionRoute = ApiAiActionRouteImport.update({
   id: '/api/ai/$action',
   path: '/api/ai/$action',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/grammar': typeof GrammarRoute
   '/speaking': typeof SpeakingRoute
+  '/vocabulary': typeof VocabularyRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/grammar': typeof GrammarRoute
   '/speaking': typeof SpeakingRoute
+  '/vocabulary': typeof VocabularyRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,28 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/grammar': typeof GrammarRoute
   '/speaking': typeof SpeakingRoute
+  '/vocabulary': typeof VocabularyRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/grammar' | '/speaking' | '/api/ai/$action'
+  fullPaths: '/' | '/grammar' | '/speaking' | '/vocabulary' | '/api/ai/$action'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/grammar' | '/speaking' | '/api/ai/$action'
-  id: '__root__' | '/' | '/grammar' | '/speaking' | '/api/ai/$action'
+  to: '/' | '/grammar' | '/speaking' | '/vocabulary' | '/api/ai/$action'
+  id:
+    | '__root__'
+    | '/'
+    | '/grammar'
+    | '/speaking'
+    | '/vocabulary'
+    | '/api/ai/$action'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GrammarRoute: typeof GrammarRoute
   SpeakingRoute: typeof SpeakingRoute
+  VocabularyRoute: typeof VocabularyRoute
   ApiAiActionRoute: typeof ApiAiActionRoute
 }
 
@@ -92,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpeakingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/vocabulary': {
+      id: '/vocabulary'
+      path: '/vocabulary'
+      fullPath: '/vocabulary'
+      preLoaderRoute: typeof VocabularyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai/$action': {
       id: '/api/ai/$action'
       path: '/api/ai/$action'
@@ -106,6 +129,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GrammarRoute: GrammarRoute,
   SpeakingRoute: SpeakingRoute,
+  VocabularyRoute: VocabularyRoute,
   ApiAiActionRoute: ApiAiActionRoute,
 }
 export const routeTree = rootRouteImport
