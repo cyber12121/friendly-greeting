@@ -133,7 +133,7 @@ export const dailyPlannerEngine = {
       console.warn('Failed to save generated daily plan to Firestore:', err);
     }
 
-    // Save to localStorage
+    // Save to safeStorage
     this.savePlanLocally(plan);
 
     return plan;
