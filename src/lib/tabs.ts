@@ -11,6 +11,8 @@ export const TAB_PATHS: Record<string, string> = {
   writing: "/writing",
   progress: "/progress",
   planner: "/planner",
+  settings: "/settings",
+  login: "/login",
 };
 
 export function tabToPath(tab: string): string {
