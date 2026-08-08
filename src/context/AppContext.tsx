@@ -69,24 +69,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const evaluatedProfile = learnerProfileEngine.evaluate(comprehensiveProfile);
 
-  // Legacy state with localStorage persistence
+  // Legacy state with safeStorage persistence
   const [profile, setProfile] = useState<LearnerProfile>(() => {
-    const saved = localStorage.getItem('b2_coach_profile');
+    const saved = safeStorage.getItem('b2_coach_profile');
     return saved ? JSON.parse(saved) : initialProfile;
   });
 
   const [skills, setSkills] = useState<SkillProgress[]>(() => {
-    const saved = localStorage.getItem('b2_coach_skills');
+    const saved = safeStorage.getItem('b2_coach_skills');
     return saved ? JSON.parse(saved) : initialSkillProgress;
   });
 
   const [activities, setActivities] = useState<RecommendedActivity[]>(() => {
-    const saved = localStorage.getItem('b2_coach_activities');
+    const saved = safeStorage.getItem('b2_coach_activities');
     return saved ? JSON.parse(saved) : defaultActivities;
   });
 
   const [vocabList, setVocabList] = useState<VocabWord[]>(() => {
-    const saved = localStorage.getItem('b2_coach_vocab');
+    const saved = safeStorage.getItem('b2_coach_vocab');
     return saved ? JSON.parse(saved) : defaultVocab;
   });
 
