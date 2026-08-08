@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GrammarRouteImport } from './routes/grammar'
 import { Route as SpeakingRouteImport } from './routes/speaking'
 import { Route as ApiAiActionRouteImport } from './routes/api/ai/$action'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrammarRoute = GrammarRouteImport.update({
+  id: '/grammar',
+  path: '/grammar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SpeakingRoute = SpeakingRouteImport.update({
@@ -31,30 +37,34 @@ const ApiAiActionRoute = ApiAiActionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/grammar': typeof GrammarRoute
   '/speaking': typeof SpeakingRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/grammar': typeof GrammarRoute
   '/speaking': typeof SpeakingRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/grammar': typeof GrammarRoute
   '/speaking': typeof SpeakingRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/speaking' | '/api/ai/$action'
+  fullPaths: '/' | '/grammar' | '/speaking' | '/api/ai/$action'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/speaking' | '/api/ai/$action'
-  id: '__root__' | '/' | '/speaking' | '/api/ai/$action'
+  to: '/' | '/grammar' | '/speaking' | '/api/ai/$action'
+  id: '__root__' | '/' | '/grammar' | '/speaking' | '/api/ai/$action'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GrammarRoute: typeof GrammarRoute
   SpeakingRoute: typeof SpeakingRoute
   ApiAiActionRoute: typeof ApiAiActionRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grammar': {
+      id: '/grammar'
+      path: '/grammar'
+      fullPath: '/grammar'
+      preLoaderRoute: typeof GrammarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/speaking': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GrammarRoute: GrammarRoute,
   SpeakingRoute: SpeakingRoute,
   ApiAiActionRoute: ApiAiActionRoute,
 }
