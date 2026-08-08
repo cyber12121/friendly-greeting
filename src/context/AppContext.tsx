@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
-import '../lib/ssr-storage';
+import { safeStorage } from '../lib/storage';
 import { pathToTab, tabToPath } from '../lib/tabs';
 import {
   LearnerProfile,
@@ -69,24 +69,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const evaluatedProfile = learnerProfileEngine.evaluate(comprehensiveProfile);
 
-  // Legacy state with localStorage persistence
+  // Legacy state with safeStorage persistence
   const [profile, setProfile] = useState<LearnerProfile>(() => {
-    const saved = localStorage.getItem('b2_coach_profile');
+    const saved = safeStorage.getItem('b2_coach_profile');
     return saved ? JSON.parse(saved) : initialProfile;
   });
 
   const [skills, setSkills] = useState<SkillProgress[]>(() => {
-    const saved = localStorage.getItem('b2_coach_skills');
+    const saved = safeStorage.getItem('b2_coach_skills');
     return saved ? JSON.parse(saved) : initialSkillProgress;
   });
 
   const [activities, setActivities] = useState<RecommendedActivity[]>(() => {
-    const saved = localStorage.getItem('b2_coach_activities');
+    const saved = safeStorage.getItem('b2_coach_activities');
     return saved ? JSON.parse(saved) : defaultActivities;
   });
 
   const [vocabList, setVocabList] = useState<VocabWord[]>(() => {
-    const saved = localStorage.getItem('b2_coach_vocab');
+    const saved = safeStorage.getItem('b2_coach_vocab');
     return saved ? JSON.parse(saved) : defaultVocab;
   });
 
@@ -101,19 +101,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isLessonModalOpen, setIsLessonModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_profile', JSON.stringify(profile));
+    safeStorage.setItem('b2_coach_profile', JSON.stringify(profile));
   }, [profile]);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_skills', JSON.stringify(skills));
+    safeStorage.setItem('b2_coach_skills', JSON.stringify(skills));
   }, [skills]);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_activities', JSON.stringify(activities));
+    safeStorage.setItem('b2_coach_activities', JSON.stringify(activities));
   }, [activities]);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_vocab', JSON.stringify(vocabList));
+    safeStorage.setItem('b2_coach_vocab', JSON.stringify(vocabList));
   }, [vocabList]);
 
   // Methods for Core Learner Data Model
@@ -237,11 +237,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const resetAllProgress = () => {
-    localStorage.removeItem('b2_coach_profile');
-    localStorage.removeItem('b2_coach_skills');
-    localStorage.removeItem('b2_coach_activities');
-    localStorage.removeItem('b2_coach_vocab');
-    localStorage.removeItem('b2_coach_comprehensive_learner_profile');
+    safeStorage.removeItem('b2_coach_profile');
+    safeStorage.removeItem('b2_coach_skills');
+    safeStorage.removeItem('b2_coach_activities');
+    safeStorage.removeItem('b2_coach_vocab');
+    safeStorage.removeItem('b2_coach_comprehensive_learner_profile');
 
     const freshModel = learnerService.resetToDefault();
     setComprehensiveProfile(freshModel);

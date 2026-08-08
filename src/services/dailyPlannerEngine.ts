@@ -1,3 +1,4 @@
+import { safeStorage } from '../lib/storage';
 import { aiClientService } from './aiClientService';
 import { firebaseService } from './firebaseService';
 import { learnerService } from './learnerService';
@@ -37,11 +38,11 @@ const PLAN_STORAGE_KEY = 'b2_coach_adaptive_daily_plan';
 
 export const dailyPlannerEngine = {
   /**
-   * Get currently cached daily plan from localStorage
+   * Get currently cached daily plan from safeStorage
    */
   getStoredPlan(): AdaptiveDailyPlan | null {
     try {
-      const saved = localStorage.getItem(PLAN_STORAGE_KEY);
+      const saved = safeStorage.getItem(PLAN_STORAGE_KEY);
       if (saved) {
         return JSON.parse(saved);
       }
@@ -56,9 +57,9 @@ export const dailyPlannerEngine = {
    */
   savePlanLocally(plan: AdaptiveDailyPlan): void {
     try {
-      localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(plan));
+      safeStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(plan));
     } catch (e) {
-      console.error('Failed to save daily plan to localStorage:', e);
+      console.error('Failed to save daily plan to safeStorage:', e);
     }
   },
 
@@ -132,7 +133,7 @@ export const dailyPlannerEngine = {
       console.warn('Failed to save generated daily plan to Firestore:', err);
     }
 
-    // Save to localStorage
+    // Save to safeStorage
     this.savePlanLocally(plan);
 
     return plan;

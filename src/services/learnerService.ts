@@ -9,6 +9,7 @@ import {
   SessionHistoryItem
 } from '../types';
 import { initialComprehensiveLearnerProfile } from '../data/mockLearnerModel';
+import { safeStorage } from '../lib/storage';
 import { firebaseService } from './firebaseService';
 
 const STORAGE_KEY = 'b2_coach_comprehensive_learner_profile';
@@ -22,7 +23,7 @@ export class LearnerService {
 
   private loadFromStorage(): ComprehensiveLearnerProfile {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = safeStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         // Ensure structure backward compatibility
@@ -41,9 +42,9 @@ export class LearnerService {
 
   private saveToStorage(): void {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.profile));
+      safeStorage.setItem(STORAGE_KEY, JSON.stringify(this.profile));
     } catch (e) {
-      console.error('Error saving learner profile to localStorage', e);
+      console.error('Error saving learner profile to safeStorage', e);
     }
   }
 

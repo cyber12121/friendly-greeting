@@ -10,7 +10,6 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import "../lib/ssr-storage";
 import { AuthProvider } from "../context/AuthContext";
 import { AppProvider } from "../context/AppContext";
 import { AppShell } from "../components/AppShell";

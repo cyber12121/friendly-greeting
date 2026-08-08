@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { safeStorage } from '../lib/storage';
 import { useApp } from '../context/AppContext';
 import { speakingScenarios } from '../data/mockData';
 import { ChatMessage } from '../types';
@@ -156,7 +157,7 @@ export const SpeakingPage: React.FC = () => {
 
   // Listening to Speaking Bridge setup
   useEffect(() => {
-    const bridgeStr = localStorage.getItem('listening_speaking_bridge');
+    const bridgeStr = safeStorage.getItem('listening_speaking_bridge');
     if (bridgeStr) {
       try {
         const bridge = JSON.parse(bridgeStr);
@@ -168,7 +169,7 @@ export const SpeakingPage: React.FC = () => {
             setSelectedScenarioId(match.id);
           }
         }
-        localStorage.removeItem('listening_speaking_bridge');
+        safeStorage.removeItem('listening_speaking_bridge');
       } catch (e) {
         console.error('Failed to parse listening speaking bridge:', e);
       }
