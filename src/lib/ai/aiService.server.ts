@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { getAIClient } from './gatewayClient.server';
 import {
   LearnerContext,
   formatLearnerContextPrompt,
@@ -22,20 +22,8 @@ import {
   b2AssessmentSchema
 } from './prompts.server';
 
-// Initialize GoogleGenAI client lazily or when env key exists
-function getGenAIClient(): GoogleGenAI {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.warn('GEMINI_API_KEY is not defined in process.env. Requests may fail if no fallback key is available.');
-  }
-  return new GoogleGenAI({
-    apiKey: apiKey || '',
-    httpOptions: {
-      headers: {
-        'User-Agent': 'aistudio-build'
-      }
-    }
-  });
+function getGenAIClient() {
+  return getAIClient();
 }
 
 // Default model for text generation tasks
