@@ -101,19 +101,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isLessonModalOpen, setIsLessonModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_profile', JSON.stringify(profile));
+    safeStorage.setItem('b2_coach_profile', JSON.stringify(profile));
   }, [profile]);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_skills', JSON.stringify(skills));
+    safeStorage.setItem('b2_coach_skills', JSON.stringify(skills));
   }, [skills]);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_activities', JSON.stringify(activities));
+    safeStorage.setItem('b2_coach_activities', JSON.stringify(activities));
   }, [activities]);
 
   useEffect(() => {
-    localStorage.setItem('b2_coach_vocab', JSON.stringify(vocabList));
+    safeStorage.setItem('b2_coach_vocab', JSON.stringify(vocabList));
   }, [vocabList]);
 
   // Methods for Core Learner Data Model
@@ -237,11 +237,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const resetAllProgress = () => {
-    localStorage.removeItem('b2_coach_profile');
-    localStorage.removeItem('b2_coach_skills');
-    localStorage.removeItem('b2_coach_activities');
-    localStorage.removeItem('b2_coach_vocab');
-    localStorage.removeItem('b2_coach_comprehensive_learner_profile');
+    safeStorage.removeItem('b2_coach_profile');
+    safeStorage.removeItem('b2_coach_skills');
+    safeStorage.removeItem('b2_coach_activities');
+    safeStorage.removeItem('b2_coach_vocab');
+    safeStorage.removeItem('b2_coach_comprehensive_learner_profile');
 
     const freshModel = learnerService.resetToDefault();
     setComprehensiveProfile(freshModel);
