@@ -87,7 +87,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return saved ? JSON.parse(saved) : defaultVocab;
   });
 
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  // `activeTab` is derived from the current URL so every page has its own route.
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const activeTab = pathToTab(pathname);
+  const navigate = useNavigate();
+  const setActiveTab = (tab: string) => {
+    void navigate({ to: tabToPath(tab) });
+  };
+
   const [isLessonModalOpen, setIsLessonModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
