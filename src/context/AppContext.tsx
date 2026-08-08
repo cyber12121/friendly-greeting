@@ -1,4 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate, useRouterState } from '@tanstack/react-router';
+import '../lib/ssr-storage';
+import { pathToTab, tabToPath } from '../lib/tabs';
 import {
   LearnerProfile,
   SkillProgress,
@@ -88,7 +91,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   // `activeTab` is derived from the current URL so every page has its own route.
-  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const pathname = useRouterState({ select: (state: { location: { pathname: string } }) => state.location.pathname });
   const activeTab = pathToTab(pathname);
   const navigate = useNavigate();
   const setActiveTab = (tab: string) => {

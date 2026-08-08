@@ -226,7 +226,7 @@ export const GrammarPage: React.FC = () => {
       learnerService.recordSession({
         activityType: 'Adaptive Grammar Lesson',
         topic: currentTopic.title,
-        durationMinutes: 12,
+        duration: 12,
         score: overallAccuracy,
         notes: `Grammar status: ${newStatus.toUpperCase()}. Review scheduled in ${nextDays} days.`
       });
