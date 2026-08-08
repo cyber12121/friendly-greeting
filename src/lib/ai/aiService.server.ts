@@ -20,7 +20,7 @@ import {
   updateLearnerProfileSchema,
   generateWeeklyReviewSchema,
   b2AssessmentSchema
-} from './prompts.js';
+} from './prompts.server';
 
 // Initialize GoogleGenAI client lazily or when env key exists
 function getGenAIClient(): GoogleGenAI {
