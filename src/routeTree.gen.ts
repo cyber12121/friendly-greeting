@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SpeakingRouteImport } from './routes/speaking'
 import { Route as ApiAiActionRouteImport } from './routes/api/ai/$action'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpeakingRoute = SpeakingRouteImport.update({
+  id: '/speaking',
+  path: '/speaking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAiActionRoute = ApiAiActionRouteImport.update({
@@ -25,27 +31,31 @@ const ApiAiActionRoute = ApiAiActionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/speaking': typeof SpeakingRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/speaking': typeof SpeakingRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/speaking': typeof SpeakingRoute
   '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/ai/$action'
+  fullPaths: '/' | '/speaking' | '/api/ai/$action'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/ai/$action'
-  id: '__root__' | '/' | '/api/ai/$action'
+  to: '/' | '/speaking' | '/api/ai/$action'
+  id: '__root__' | '/' | '/speaking' | '/api/ai/$action'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SpeakingRoute: typeof SpeakingRoute
   ApiAiActionRoute: typeof ApiAiActionRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/speaking': {
+      id: '/speaking'
+      path: '/speaking'
+      fullPath: '/speaking'
+      preLoaderRoute: typeof SpeakingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ai/$action': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SpeakingRoute: SpeakingRoute,
   ApiAiActionRoute: ApiAiActionRoute,
 }
 export const routeTree = rootRouteImport
