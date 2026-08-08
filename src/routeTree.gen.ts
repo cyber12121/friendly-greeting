@@ -10,33 +10,180 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssessmentRouteImport } from './routes/assessment'
+import { Route as GrammarRouteImport } from './routes/grammar'
+import { Route as ListeningRouteImport } from './routes/listening'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SpeakingRouteImport } from './routes/speaking'
+import { Route as VocabularyRouteImport } from './routes/vocabulary'
+import { Route as WritingRouteImport } from './routes/writing'
+import { Route as ApiAiActionRouteImport } from './routes/api/ai/$action'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssessmentRoute = AssessmentRouteImport.update({
+  id: '/assessment',
+  path: '/assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrammarRoute = GrammarRouteImport.update({
+  id: '/grammar',
+  path: '/grammar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListeningRoute = ListeningRouteImport.update({
+  id: '/listening',
+  path: '/listening',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlannerRoute = PlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpeakingRoute = SpeakingRouteImport.update({
+  id: '/speaking',
+  path: '/speaking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VocabularyRoute = VocabularyRouteImport.update({
+  id: '/vocabulary',
+  path: '/vocabulary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WritingRoute = WritingRouteImport.update({
+  id: '/writing',
+  path: '/writing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAiActionRoute = ApiAiActionRouteImport.update({
+  id: '/api/ai/$action',
+  path: '/api/ai/$action',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assessment': typeof AssessmentRoute
+  '/grammar': typeof GrammarRoute
+  '/listening': typeof ListeningRoute
+  '/login': typeof LoginRoute
+  '/planner': typeof PlannerRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/speaking': typeof SpeakingRoute
+  '/vocabulary': typeof VocabularyRoute
+  '/writing': typeof WritingRoute
+  '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assessment': typeof AssessmentRoute
+  '/grammar': typeof GrammarRoute
+  '/listening': typeof ListeningRoute
+  '/login': typeof LoginRoute
+  '/planner': typeof PlannerRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/speaking': typeof SpeakingRoute
+  '/vocabulary': typeof VocabularyRoute
+  '/writing': typeof WritingRoute
+  '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assessment': typeof AssessmentRoute
+  '/grammar': typeof GrammarRoute
+  '/listening': typeof ListeningRoute
+  '/login': typeof LoginRoute
+  '/planner': typeof PlannerRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/speaking': typeof SpeakingRoute
+  '/vocabulary': typeof VocabularyRoute
+  '/writing': typeof WritingRoute
+  '/api/ai/$action': typeof ApiAiActionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/assessment'
+    | '/grammar'
+    | '/listening'
+    | '/login'
+    | '/planner'
+    | '/progress'
+    | '/settings'
+    | '/speaking'
+    | '/vocabulary'
+    | '/writing'
+    | '/api/ai/$action'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/assessment'
+    | '/grammar'
+    | '/listening'
+    | '/login'
+    | '/planner'
+    | '/progress'
+    | '/settings'
+    | '/speaking'
+    | '/vocabulary'
+    | '/writing'
+    | '/api/ai/$action'
+  id:
+    | '__root__'
+    | '/'
+    | '/assessment'
+    | '/grammar'
+    | '/listening'
+    | '/login'
+    | '/planner'
+    | '/progress'
+    | '/settings'
+    | '/speaking'
+    | '/vocabulary'
+    | '/writing'
+    | '/api/ai/$action'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssessmentRoute: typeof AssessmentRoute
+  GrammarRoute: typeof GrammarRoute
+  ListeningRoute: typeof ListeningRoute
+  LoginRoute: typeof LoginRoute
+  PlannerRoute: typeof PlannerRoute
+  ProgressRoute: typeof ProgressRoute
+  SettingsRoute: typeof SettingsRoute
+  SpeakingRoute: typeof SpeakingRoute
+  VocabularyRoute: typeof VocabularyRoute
+  WritingRoute: typeof WritingRoute
+  ApiAiActionRoute: typeof ApiAiActionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +195,100 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assessment': {
+      id: '/assessment'
+      path: '/assessment'
+      fullPath: '/assessment'
+      preLoaderRoute: typeof AssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grammar': {
+      id: '/grammar'
+      path: '/grammar'
+      fullPath: '/grammar'
+      preLoaderRoute: typeof GrammarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/listening': {
+      id: '/listening'
+      path: '/listening'
+      fullPath: '/listening'
+      preLoaderRoute: typeof ListeningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planner': {
+      id: '/planner'
+      path: '/planner'
+      fullPath: '/planner'
+      preLoaderRoute: typeof PlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/speaking': {
+      id: '/speaking'
+      path: '/speaking'
+      fullPath: '/speaking'
+      preLoaderRoute: typeof SpeakingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vocabulary': {
+      id: '/vocabulary'
+      path: '/vocabulary'
+      fullPath: '/vocabulary'
+      preLoaderRoute: typeof VocabularyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/writing': {
+      id: '/writing'
+      path: '/writing'
+      fullPath: '/writing'
+      preLoaderRoute: typeof WritingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ai/$action': {
+      id: '/api/ai/$action'
+      path: '/api/ai/$action'
+      fullPath: '/api/ai/$action'
+      preLoaderRoute: typeof ApiAiActionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssessmentRoute: AssessmentRoute,
+  GrammarRoute: GrammarRoute,
+  ListeningRoute: ListeningRoute,
+  LoginRoute: LoginRoute,
+  PlannerRoute: PlannerRoute,
+  ProgressRoute: ProgressRoute,
+  SettingsRoute: SettingsRoute,
+  SpeakingRoute: SpeakingRoute,
+  VocabularyRoute: VocabularyRoute,
+  WritingRoute: WritingRoute,
+  ApiAiActionRoute: ApiAiActionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

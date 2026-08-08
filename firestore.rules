@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // User root document and all subcollections
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      match /{allSubcollections=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Top-level collections isolated by userId
+    match /learnerProfiles/{docId} {
+      allow read, write: if request.auth != null && (docId == request.auth.uid || (resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /skillAssessments/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /grammarProgress/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /vocabularyProgress/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /errorLogs/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /learningSessions/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /writingSubmissions/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /listeningSessions/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /dailyPlans/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+    match /speakingAssessments/{docId} {
+      allow read, write: if request.auth != null && ((resource == null && request.resource.data.userId == request.auth.uid) || (resource != null && resource.data.userId == request.auth.uid));
+    }
+  }
+}
