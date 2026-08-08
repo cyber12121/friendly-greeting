@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { grammarTopics } from '../data/mockData';
 import { aiClientService } from '../services/aiClientService';
+import { learnerService } from '../services/learnerService';
 import { evaluateGrammarRecommendations, RecommendedGrammarTopicResult } from '../utils/grammarAdaptiveEngine';
 import { GrammarProfileItem, GrammarTopicStatus } from '../types';
 import {
@@ -30,7 +31,7 @@ import {
 } from 'lucide-react';
 
 export const GrammarPage: React.FC = () => {
-  const { profile, updateSkillScore, addXpAndMinutes, learnerService } = useApp();
+  const { comprehensiveProfile: profile, updateSkillScore, addXpAndMinutes } = useApp();
 
   // 1. Evaluate recommended topics based on learner level, error log, review schedule, etc.
   const recommendedResults: RecommendedGrammarTopicResult[] = useMemo(() => {

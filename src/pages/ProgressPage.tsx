@@ -175,7 +175,7 @@ export const ProgressPage: React.FC = () => {
   // Categorize grammar items by their actual computed status
   const masteredGrammarList = grammarProfile.filter(g => g.status === 'mastered');
   const learningGrammarList = grammarProfile.filter(g => g.status === 'learning' || g.status === 'developing');
-  const needsReviewGrammarList = grammarProfile.filter(g => g.status === 'needs work' || g.timesFailed > 1);
+  const needsReviewGrammarList = grammarProfile.filter(g => g.timesFailed > 1);
   const estimatedGrammarList = grammarProfile.filter(g => g.status === 'new' || (g.timesPracticed === 0 && g.status !== 'mastered'));
 
   // Categorize vocabulary items by their actual computed status
@@ -740,7 +740,7 @@ export const ProgressPage: React.FC = () => {
                 </div>
 
                 <div className="pt-3 border-t border-slate-200/60 text-[10px] text-slate-400 flex justify-between items-center">
-                  <span>Assessed: {evaluatedProfile.currentLevel.skillEstimates[selectedSkillForEvidence]?.lastAssessedDate || 'Initial Placement'}</span>
+                  <span>Assessed: {evaluatedProfile.currentLevel.skillEstimates[selectedSkillForEvidence] && 'Recent session evidence' || 'Initial Placement'}</span>
                   <span className="uppercase font-semibold tracking-wider bg-slate-200 text-slate-700 px-2 py-0.5 rounded">
                     {evaluatedProfile.currentLevel.skillEstimates[selectedSkillForEvidence]?.trend || 'Stable'}
                   </span>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import {
   dailyPlannerEngine,
   AdaptiveDailyPlan,
@@ -37,7 +38,8 @@ const skillIconMap: Record<string, React.FC<{ className?: string }>> = {
 };
 
 export const AdaptivePlannerView: React.FC = () => {
-  const { setActiveTab, user } = useApp();
+  const { setActiveTab } = useApp();
+  const { user } = useAuth();
   const [plan, setPlan] = useState<AdaptiveDailyPlan | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [showReasoning, setShowReasoning] = useState<boolean>(true);

@@ -64,8 +64,8 @@ export const firebaseService = {
     // Also persist in top-level learnerProfiles collection for direct collection indexing
     const topProfileRef = doc(db, 'learnerProfiles', userId);
     await setDoc(topProfileRef, {
-      userId,
       ...profileToSave.userProfile,
+      userId,
       updatedAt: serverTimestamp()
     }, { merge: true });
 

@@ -273,7 +273,7 @@ export const AssessmentPage: React.FC = () => {
   ];
 
   const [currentSpeakingPromptIndex, setCurrentSpeakingPromptIndex] = useState(0);
-  const [speakingTranscripts, setSpeakingTranscripts] = useState<Record<string, string>>({
+  const [speakingTranscripts, setSpeakingTranscripts] = useState({
     spontaneous: '',
     abstract: '',
     storytelling: '',
@@ -682,7 +682,7 @@ export const AssessmentPage: React.FC = () => {
                   <span>{q.question}</span>
                 </p>
                 <div className="grid grid-cols-1 gap-2 pl-6">
-                  {q.options.map((opt, optIdx) => (
+                  {q.options.map((opt: string, optIdx: number) => (
                     <button
                       key={optIdx}
                       onClick={() => {

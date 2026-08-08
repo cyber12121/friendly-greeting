@@ -376,13 +376,14 @@ export const WritingPage: React.FC = () => {
       // Log any remaining active errors
       if (draftFeedback.categorizedErrors) {
         draftFeedback.categorizedErrors.forEach((err, idx) => {
-          const isResolved = response.resolvedErrors.some(re => re.toLowerCase().includes(err.category));
+          const isResolved = response.resolvedErrors.some((re: string) => re.toLowerCase().includes(err.category));
           logLearnerError({
             errorType: `Writing Inaccuracy (${err.category})`,
             originalSentence: err.originalSnippet,
             correctedSentence: isResolved ? 'Resolved in final revision' : 'Remains in draft',
             explanation: err.explanation,
             category: 'Writing',
+            frequency: 1,
             severity: 'moderate',
             status: isResolved ? 'resolved' : 'active'
           });
