@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { safeStorage } from '../lib/storage';
 import { useApp } from '../context/AppContext';
 import { speakingScenarios } from '../data/mockData';
 import { ChatMessage } from '../types';
