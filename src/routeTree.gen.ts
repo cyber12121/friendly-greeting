@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GrammarRouteImport } from './routes/grammar'
+import { Route as ListeningRouteImport } from './routes/listening'
 import { Route as SpeakingRouteImport } from './routes/speaking'
 import { Route as VocabularyRouteImport } from './routes/vocabulary'
 import { Route as WritingRouteImport } from './routes/writing'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const GrammarRoute = GrammarRouteImport.update({
   id: '/grammar',
   path: '/grammar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListeningRoute = ListeningRouteImport.update({
+  id: '/listening',
+  path: '/listening',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SpeakingRoute = SpeakingRouteImport.update({
@@ -50,6 +56,7 @@ const ApiAiActionRoute = ApiAiActionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/grammar': typeof GrammarRoute
+  '/listening': typeof ListeningRoute
   '/speaking': typeof SpeakingRoute
   '/vocabulary': typeof VocabularyRoute
   '/writing': typeof WritingRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/grammar': typeof GrammarRoute
+  '/listening': typeof ListeningRoute
   '/speaking': typeof SpeakingRoute
   '/vocabulary': typeof VocabularyRoute
   '/writing': typeof WritingRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/grammar': typeof GrammarRoute
+  '/listening': typeof ListeningRoute
   '/speaking': typeof SpeakingRoute
   '/vocabulary': typeof VocabularyRoute
   '/writing': typeof WritingRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/grammar'
+    | '/listening'
     | '/speaking'
     | '/vocabulary'
     | '/writing'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/grammar'
+    | '/listening'
     | '/speaking'
     | '/vocabulary'
     | '/writing'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/grammar'
+    | '/listening'
     | '/speaking'
     | '/vocabulary'
     | '/writing'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GrammarRoute: typeof GrammarRoute
+  ListeningRoute: typeof ListeningRoute
   SpeakingRoute: typeof SpeakingRoute
   VocabularyRoute: typeof VocabularyRoute
   WritingRoute: typeof WritingRoute
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/grammar'
       fullPath: '/grammar'
       preLoaderRoute: typeof GrammarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/listening': {
+      id: '/listening'
+      path: '/listening'
+      fullPath: '/listening'
+      preLoaderRoute: typeof ListeningRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/speaking': {
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GrammarRoute: GrammarRoute,
+  ListeningRoute: ListeningRoute,
   SpeakingRoute: SpeakingRoute,
   VocabularyRoute: VocabularyRoute,
   WritingRoute: WritingRoute,
