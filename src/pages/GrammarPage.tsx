@@ -228,6 +228,9 @@ export const GrammarPage: React.FC = () => {
         topic: currentTopic.title,
         duration: 12,
         score: overallAccuracy,
+        mistakes: [],
+        vocabularyUsed: [],
+        grammarUsed: [currentTopic.title],
         notes: `Grammar status: ${newStatus.toUpperCase()}. Review scheduled in ${nextDays} days.`
       });
 
