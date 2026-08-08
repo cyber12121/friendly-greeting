@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
-import '../lib/ssr-storage';
+import { safeStorage } from '../lib/storage';
 import { pathToTab, tabToPath } from '../lib/tabs';
 import {
   LearnerProfile,
