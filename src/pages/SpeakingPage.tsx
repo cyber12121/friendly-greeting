@@ -606,7 +606,8 @@ export const SpeakingPage: React.FC = () => {
 
       {/* Pre-Session Setup Briefing Card (if session not active & no report yet) */}
       {!isSessionActive && !assessmentData && (
-        <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-sm space-y-4 border border-slate-800">
+        <Collapse title="Session briefing" hint={`Target level ${difficulty} · ${targetGrammarTopic}`}>
+        <div className="bg-slate-900 text-white p-6 rounded-2xl space-y-4 border border-slate-800">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 text-indigo-400" />
