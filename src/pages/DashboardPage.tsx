@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { aiClientService } from '../services/aiClientService';
 import { AdaptivePlannerView } from '../components/AdaptivePlannerView';
