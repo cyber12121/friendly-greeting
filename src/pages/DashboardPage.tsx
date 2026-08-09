@@ -133,8 +133,9 @@ export const DashboardPage: React.FC = () => {
         <div className="flex items-baseline justify-between">
           <h2 className="text-sm font-semibold">Today's tasks</h2>
           <span className="text-xs text-muted-foreground tabular-nums">
-            {doneCount}/{activities.length}
+            {mounted ? `${doneCount}/${activities.length}` : `${activities.length} tasks`}
           </span>
+
         </div>
 
         <ul className="divide-y divide-border rounded-2xl border border-border bg-card">
