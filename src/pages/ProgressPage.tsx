@@ -34,6 +34,7 @@ import {
   PlusCircle,
   ChevronRight
 } from 'lucide-react';
+import { Collapse } from '../components/Collapse';
 
 export const ProgressPage: React.FC = () => {
   const {
@@ -347,15 +348,11 @@ export const ProgressPage: React.FC = () => {
           </div>
 
           {/* Strict CEFR Spontaneous Production Guardrails Banner */}
-          <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs text-slate-600 space-y-2">
-            <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-indigo-600" />
-              <strong className="text-slate-800 font-bold">CEFR Validation Standard Rule</strong>
-            </div>
-            <p className="leading-relaxed">
+          <Collapse title="How levels are validated" hint="CEFR validation standard">
+            <p className="leading-relaxed text-xs text-slate-600">
               Achieving an objective <strong className="text-indigo-600 font-semibold">B2 Independent User</strong> rating requires verified accuracy and spontaneous verbal flow under cognitive load. Our analytics engine is highly rigorous: <strong className="text-rose-600 font-semibold">we do not claim B2 status simply because a course calendar hits 90 days</strong>. Estimates are calculated purely on spontaneous speaking hesitation lengths, active listening quiz performance, and grammatical accuracy logs in live practice sessions.
             </p>
-          </div>
+          </Collapse>
 
           {/* ADAPTIVE 90-DAY CURRICULUM TIMELINE & SIMULATOR */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-6">
