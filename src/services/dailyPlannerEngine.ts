@@ -170,20 +170,9 @@ export const dailyPlannerEngine = {
       completedCount: 0
     };
 
-    // Save to Firestore
-    try {
-      await firebaseService.saveDailyPlan(effectiveUserId, {
-        day: plan.dayNumber,
-        objective: plan.dailyObjective,
-        tasks: plan.activities,
-        completed: false
-      });
-    } catch (err) {
-      console.warn('Failed to save generated daily plan to Firestore:', err);
-    }
-
-    // Save to safeStorage
+    // Save locally + to Firestore
     this.savePlanLocally(plan);
+    await this.savePlanRemote(plan, effectiveUserId);
 
     return plan;
   },
@@ -200,20 +189,10 @@ export const dailyPlannerEngine = {
 
     activity.completed = !activity.completed;
     plan.completedCount = plan.activities.filter((a) => a.completed).length;
+    (plan as any).updatedAt = new Date().toISOString();
 
     this.savePlanLocally(plan);
-
-    const effectiveUserId = userId || plan.userId;
-    try {
-      await firebaseService.saveDailyPlan(effectiveUserId, {
-        day: plan.dayNumber,
-        objective: plan.dailyObjective,
-        tasks: plan.activities,
-        completed: plan.completedCount === plan.activities.length
-      });
-    } catch (err) {
-      console.warn('Failed to sync updated plan activity to Firestore:', err);
-    }
+    await this.savePlanRemote(plan, userId);
 
     return plan;
   }
