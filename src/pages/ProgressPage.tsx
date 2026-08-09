@@ -514,15 +514,10 @@ export const ProgressPage: React.FC = () => {
             </div>
 
             {/* Interactive Simulator Panel */}
-            <div className="bg-slate-50 p-5 rounded-xl border border-slate-200/60 space-y-4">
+            <Collapse title="Adaptive engine simulator" hint="Optional — test how phases adjust">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-                    Interactive Adaptive Engine Simulator
-                  </h4>
-                  <p className="text-[11px] text-slate-500">Test how the coach instantly adjusts the active phase based on performance evidence.</p>
-                </div>
+                <p className="text-[11px] text-slate-500">Test how the coach instantly adjusts the active phase based on performance evidence.</p>
 
                 {/* Day Controller */}
                 <div className="flex items-center gap-2">
@@ -583,6 +578,8 @@ export const ProgressPage: React.FC = () => {
                 </button>
               </div>
             </div>
+            </Collapse>
+
           </div>
 
           {/* Top Strengths and Top Weaknesses Grid */}
