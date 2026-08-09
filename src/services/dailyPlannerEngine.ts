@@ -64,6 +64,55 @@ export const dailyPlannerEngine = {
   },
 
   /**
+   * Persist the full plan (including completions) to Firestore
+   */
+  async savePlanRemote(plan: AdaptiveDailyPlan, userId?: string): Promise<void> {
+    const effectiveUserId = userId || plan.userId;
+    if (!effectiveUserId || effectiveUserId === 'guest_user') return;
+    try {
+      await firebaseService.saveDailyPlan(effectiveUserId, {
+        day: plan.dayNumber,
+        objective: plan.dailyObjective,
+        tasks: plan.activities,
+        completed: plan.completedCount === plan.activities.length,
+        snapshot: { ...plan, userId: effectiveUserId, updatedAt: new Date().toISOString() }
+      });
+    } catch (err) {
+      console.warn('Failed to sync daily plan to Firestore:', err);
+    }
+  },
+
+  /**
+   * Load the plan, preferring the freshest of Firestore vs local cache
+   * so completions stay consistent across devices.
+   */
+  async loadPlan(userId?: string): Promise<AdaptiveDailyPlan | null> {
+    const local = this.getStoredPlan();
+    if (!userId || userId === 'guest_user') return local;
+
+    const remoteDoc = await firebaseService.getLatestDailyPlan(userId);
+    const remote: AdaptiveDailyPlan | null = remoteDoc?.snapshot ?? null;
+    if (!remote) {
+      if (local) await this.savePlanRemote(local, userId);
+      return local;
+    }
+    if (!local) {
+      this.savePlanLocally(remote);
+      return remote;
+    }
+
+    const remoteTime = (remoteDoc.updatedAt || remote.generatedAt || '') as string;
+    const localTime = ((local as any).updatedAt || local.generatedAt || '') as string;
+    if (remoteTime > localTime) {
+      this.savePlanLocally(remote);
+      return remote;
+    }
+    await this.savePlanRemote(local, userId);
+    return local;
+  },
+
+
+  /**
    * Generate today's English lesson automatically from the learner profile with full 13-factor context
    */
   async generateTodayPlan(userId?: string): Promise<AdaptiveDailyPlan> {
@@ -121,20 +170,9 @@ export const dailyPlannerEngine = {
       completedCount: 0
     };
 
-    // Save to Firestore
-    try {
-      await firebaseService.saveDailyPlan(effectiveUserId, {
-        day: plan.dayNumber,
-        objective: plan.dailyObjective,
-        tasks: plan.activities,
-        completed: false
-      });
-    } catch (err) {
-      console.warn('Failed to save generated daily plan to Firestore:', err);
-    }
-
-    // Save to safeStorage
+    // Save locally + to Firestore
     this.savePlanLocally(plan);
+    await this.savePlanRemote(plan, effectiveUserId);
 
     return plan;
   },
@@ -151,20 +189,10 @@ export const dailyPlannerEngine = {
 
     activity.completed = !activity.completed;
     plan.completedCount = plan.activities.filter((a) => a.completed).length;
+    (plan as any).updatedAt = new Date().toISOString();
 
     this.savePlanLocally(plan);
-
-    const effectiveUserId = userId || plan.userId;
-    try {
-      await firebaseService.saveDailyPlan(effectiveUserId, {
-        day: plan.dayNumber,
-        objective: plan.dailyObjective,
-        tasks: plan.activities,
-        completed: plan.completedCount === plan.activities.length
-      });
-    } catch (err) {
-      console.warn('Failed to sync updated plan activity to Firestore:', err);
-    }
+    await this.savePlanRemote(plan, userId);
 
     return plan;
   }

@@ -331,11 +331,11 @@ export const firebaseService = {
   },
 
   /**
-   * Save a Daily Plan
+   * Save a Daily Plan (with full snapshot for cross-device restore)
    */
   async saveDailyPlan(
     userId: string, 
-    plan: { day: number; objective: string; tasks: any[]; completed: boolean }
+    plan: { day: number; objective: string; tasks: any[]; completed: boolean; snapshot?: any }
   ): Promise<void> {
     if (!userId) return;
 
@@ -353,6 +353,26 @@ export const firebaseService = {
     const topRef = doc(db, 'dailyPlans', `${userId}_${planId}`);
     await setDoc(topRef, payload, { merge: true });
   },
+
+  /**
+   * Fetch the most recently updated Daily Plan snapshot for a user
+   */
+  async getLatestDailyPlan(userId: string): Promise<any | null> {
+    if (!userId) return null;
+    try {
+      const snap = await getDocs(collection(db, 'users', userId, 'dailyPlans'));
+      let latest: any = null;
+      snap.forEach((d) => {
+        const data: any = d.data();
+        if (!latest || (data?.updatedAt || '') > (latest?.updatedAt || '')) latest = data;
+      });
+      return latest;
+    } catch (err) {
+      console.warn('Failed to fetch daily plan from Firestore:', err);
+      return null;
+    }
+  },
+
 
   /**
    * Save a Speaking Session Assessment

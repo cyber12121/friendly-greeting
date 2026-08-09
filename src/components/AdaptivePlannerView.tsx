@@ -68,13 +68,20 @@ export const AdaptivePlannerView: React.FC = () => {
   const [expandedActivityId, setExpandedActivityId] = useState<string | null>(null);
 
   useEffect(() => {
-    const cached = dailyPlannerEngine.getStoredPlan();
-    if (cached) {
-      setPlan(cached);
-    } else {
-      handleGeneratePlan();
-    }
-  }, []);
+    let cancelled = false;
+    (async () => {
+      const cached = dailyPlannerEngine.getStoredPlan();
+      if (cached && !cancelled) setPlan(cached);
+      const synced = await dailyPlannerEngine.loadPlan(user?.uid);
+      if (cancelled) return;
+      if (synced) setPlan({ ...synced });
+      else if (!cached) handleGeneratePlan();
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.uid]);
+
 
   const handleGeneratePlan = async () => {
     setLoading(true);
