@@ -28,6 +28,8 @@ import {
   Lightbulb,
   Zap
 } from 'lucide-react';
+import { Collapse } from '../components/Collapse';
+import { notifyAiFallback } from '../lib/notify';
 
 export const SpeakingPage: React.FC = () => {
   const { updateSkillScore, addXpAndMinutes } = useApp();
