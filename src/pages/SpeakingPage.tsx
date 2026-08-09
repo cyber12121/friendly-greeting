@@ -660,6 +660,7 @@ export const SpeakingPage: React.FC = () => {
             </div>
           </div>
         </div>
+        </Collapse>
       )}
 
       {/* Configuration Bar: Topic & Difficulty */}
