@@ -25,6 +25,7 @@ import {
   Calendar,
   Speech
 } from 'lucide-react';
+import { notifyAiFallback } from '../lib/notify';
 
 interface ListeningQuestion {
   id: string;
@@ -526,6 +527,7 @@ export const ListeningPage: React.FC = () => {
       }
     } catch (err) {
       console.error('Failed to generate customized listening exercise:', err);
+      notifyAiFallback('a new listening exercise');
       alert('Failed to generate custom listening exercise. Using default resources.');
     } finally {
       setIsGenerating(false);
@@ -681,7 +683,7 @@ export const ListeningPage: React.FC = () => {
                       className={`w-1 rounded-full transition-all duration-300 ${
                         isActive ? 'bg-teal-400 shadow-[0_0_8px_rgba(45,212,191,0.4)]' : 'bg-slate-800'
                       }`}
-                      style={{ height: `${waveHeight}px` }}
+                      style={{ height: `${waveHeight.toFixed(2)}px` }}
                     />
                   );
                 })}

@@ -26,6 +26,7 @@ import {
   MessageSquare,
   FileText
 } from 'lucide-react';
+import { notifyAiFallback } from '../lib/notify';
 import { VocabularyProfileItem, VocabularyCategory, VocabularyStatus } from '../types';
 import {
   evaluateVocabRecommendations,
@@ -159,6 +160,7 @@ export const VocabularyPage: React.FC = () => {
       setPracticeStep(5);
     } catch (err) {
       console.error('Failed to evaluate vocabulary production:', err);
+      notifyAiFallback('this evaluation');
       // Fallback evaluation
       const calculation = calculateVocabMasteryAndInterval(activeSessionItem, {
         recognitionScore: activeSessionItem.recognitionScore || 85,

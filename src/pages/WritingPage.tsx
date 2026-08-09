@@ -30,6 +30,7 @@ import {
   Activity,
   ListTodo
 } from 'lucide-react';
+import { notifyAiFallback } from '../lib/notify';
 
 interface AdaptedTask {
   id: string;
@@ -242,6 +243,7 @@ export const WritingPage: React.FC = () => {
       startTaskTimer(useAdaptiveTask ? 20 : 25);
     } catch (err) {
       console.error('Failed to generate adaptive task:', err);
+      notifyAiFallback('a new writing task');
       // Failover to structured default task
       const fallbackPreset = writingPrompts[0];
       setActiveTask({
@@ -292,6 +294,7 @@ export const WritingPage: React.FC = () => {
       setCurrentStep('review');
     } catch (err) {
       console.error('Failed to analyze writing draft:', err);
+      notifyAiFallback('draft feedback');
       // Dynamic fallback
       const fallback: DraftFeedback = {
         grammarScore: 76,
@@ -406,6 +409,7 @@ export const WritingPage: React.FC = () => {
       setCurrentStep('final_assessment');
     } catch (err) {
       console.error('Failed to analyze writing revision:', err);
+      notifyAiFallback('revision feedback');
       // Fallback
       const fallbackRevision: RevisionFeedback = {
         draftScore: draftFeedback.overallScore,

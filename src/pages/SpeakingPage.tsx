@@ -247,6 +247,7 @@ export const SpeakingPage: React.FC = () => {
       updateSkillScore('Fluency', 2);
     } catch (err) {
       console.error('Failed to evaluate speaking session:', err);
+      notifyAiFallback('your session report')
       // Fallback assessment if network fails
       const fallbackEval = {
         fluencyScore: 78,
@@ -360,6 +361,7 @@ export const SpeakingPage: React.FC = () => {
       }
     } catch (err) {
       console.error('Error calling AI speaking service:', err);
+      notifyAiFallback('this reply');
       const fallbackMsg: ChatMessage = {
         id: `ai-${Date.now()}`,
         sender: 'ai',
