@@ -44,8 +44,14 @@ export const DashboardPage: React.FC = () => {
     }
   };
 
+  // Activity completion lives in browser storage, so only show the tally
+  // once mounted — otherwise SSR and client disagree.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const doneCount = activities.filter((a) => a.completed).length;
   const nextActivity = activities.find((a) => !a.completed);
+
 
   return (
     <div className="space-y-10">
