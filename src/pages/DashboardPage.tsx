@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { aiClientService } from '../services/aiClientService';
 import { AdaptivePlannerView } from '../components/AdaptivePlannerView';
@@ -44,8 +44,14 @@ export const DashboardPage: React.FC = () => {
     }
   };
 
+  // Activity completion lives in browser storage, so only show the tally
+  // once mounted — otherwise SSR and client disagree.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const doneCount = activities.filter((a) => a.completed).length;
   const nextActivity = activities.find((a) => !a.completed);
+
 
   return (
     <div className="space-y-10">
@@ -127,8 +133,9 @@ export const DashboardPage: React.FC = () => {
         <div className="flex items-baseline justify-between">
           <h2 className="text-sm font-semibold">Today's tasks</h2>
           <span className="text-xs text-muted-foreground tabular-nums">
-            {doneCount}/{activities.length}
+            {mounted ? `${doneCount}/${activities.length}` : `${activities.length} tasks`}
           </span>
+
         </div>
 
         <ul className="divide-y divide-border rounded-2xl border border-border bg-card">
