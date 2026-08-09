@@ -134,6 +134,7 @@ function RootComponent() {
         <AppProvider>
           {/* Required: nested routes render inside the shell. */}
           <AppShell />
+          <Toaster />
         </AppProvider>
       </AuthProvider>
     </QueryClientProvider>
