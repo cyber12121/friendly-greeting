@@ -28,6 +28,8 @@ import {
   Lightbulb,
   Zap
 } from 'lucide-react';
+import { Collapse } from '../components/Collapse';
+import { notifyAiFallback } from '../lib/notify';
 
 export const SpeakingPage: React.FC = () => {
   const { updateSkillScore, addXpAndMinutes } = useApp();
@@ -245,6 +247,7 @@ export const SpeakingPage: React.FC = () => {
       updateSkillScore('Fluency', 2);
     } catch (err) {
       console.error('Failed to evaluate speaking session:', err);
+      notifyAiFallback('your session report')
       // Fallback assessment if network fails
       const fallbackEval = {
         fluencyScore: 78,
@@ -358,6 +361,7 @@ export const SpeakingPage: React.FC = () => {
       }
     } catch (err) {
       console.error('Error calling AI speaking service:', err);
+      notifyAiFallback('this reply');
       const fallbackMsg: ChatMessage = {
         id: `ai-${Date.now()}`,
         sender: 'ai',
@@ -604,7 +608,8 @@ export const SpeakingPage: React.FC = () => {
 
       {/* Pre-Session Setup Briefing Card (if session not active & no report yet) */}
       {!isSessionActive && !assessmentData && (
-        <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-sm space-y-4 border border-slate-800">
+        <Collapse title="Session briefing" hint={`Target level ${difficulty} · ${targetGrammarTopic}`}>
+        <div className="bg-slate-900 text-white p-6 rounded-2xl space-y-4 border border-slate-800">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 text-indigo-400" />
@@ -657,6 +662,7 @@ export const SpeakingPage: React.FC = () => {
             </div>
           </div>
         </div>
+        </Collapse>
       )}
 
       {/* Configuration Bar: Topic & Difficulty */}
@@ -1147,32 +1153,25 @@ export const SpeakingPage: React.FC = () => {
         </div>
 
         {/* Target Expressions & Dynamic Session Parameters Sidebar */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Target Vocabulary Checklist */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-3">
             <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-indigo-600" />
-              Target Expressions for Today
+              Use these 3 expressions
             </h3>
-            <p className="text-xs text-slate-500">Naturally weave these B2 expressions into your responses:</p>
 
             <div className="space-y-2">
               {targetVocabList.map((word, idx) => (
-                <div key={idx} className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 flex items-center justify-between">
-                  <span>"{word}"</span>
-                  <span className="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-md">B2 Target</span>
+                <div key={idx} className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
+                  "{word}"
                 </div>
               ))}
             </div>
           </div>
 
           {/* Conversation Rules & Difficulty Tracker */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-emerald-600" />
-              Coach Interaction Rules
-            </h3>
-
+          <Collapse title="How the coach works" hint="Interaction rules & feedback approach">
             <div className="space-y-2.5 text-xs text-slate-700">
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
@@ -1190,18 +1189,13 @@ export const SpeakingPage: React.FC = () => {
                 <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
                 <span><strong>Counterarguments:</strong> Turn 3+ introduces polite counterproposals to challenge you.</span>
               </div>
-            </div>
-
-            <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-xs text-indigo-900 space-y-1">
-              <p className="font-bold flex items-center gap-1 text-indigo-800">
-                <Zap className="w-3.5 h-3.5" /> B2 Coach Principle:
-              </p>
-              <p className="text-[11px] leading-relaxed">
-                Post-session feedback is strictly focused on your <strong>top 3 mistakes</strong> to ensure fast, actionable learning without cognitive overload.
+              <p className="pt-2 text-[11px] leading-relaxed text-slate-500">
+                Feedback stays focused on your <strong>top 3 mistakes</strong> — no overload.
               </p>
             </div>
-          </div>
+          </Collapse>
         </div>
+
       </div>
     </div>
   );

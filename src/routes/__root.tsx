@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { AuthProvider } from "../context/AuthContext";
 import { AppProvider } from "../context/AppContext";
 import { AppShell } from "../components/AppShell";
+import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -133,6 +134,7 @@ function RootComponent() {
         <AppProvider>
           {/* Required: nested routes render inside the shell. */}
           <AppShell />
+          <Toaster />
         </AppProvider>
       </AuthProvider>
     </QueryClientProvider>

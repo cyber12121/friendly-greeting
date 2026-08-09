@@ -29,6 +29,7 @@ import {
   MessageSquare,
   BarChart2
 } from 'lucide-react';
+import { notifyAiFallback } from '../lib/notify';
 
 export const GrammarPage: React.FC = () => {
   const { comprehensiveProfile: profile, updateSkillScore, addXpAndMinutes } = useApp();
@@ -111,6 +112,7 @@ export const GrammarPage: React.FC = () => {
       setAiCustomLesson(lesson);
     } catch (err) {
       console.error('Failed to generate AI grammar lesson:', err);
+      notifyAiFallback('this lesson');
     } finally {
       setIsGeneratingAiLesson(false);
     }
@@ -260,6 +262,7 @@ export const GrammarPage: React.FC = () => {
       setActiveStep(7);
     } catch (err) {
       console.error('Failed to complete grammar evaluation:', err);
+      notifyAiFallback('your grammar results');
     } finally {
       setIsEvaluating(false);
     }
